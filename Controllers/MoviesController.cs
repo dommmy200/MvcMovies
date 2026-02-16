@@ -20,9 +20,68 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        // public async Task<IActionResult> Index(string searchString)
+        // {
+        //     if (_context.Movie == null)
+        //     {
+        //         return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+        //     }
+
+        //     var movies = from m in _context.Movie select m;
+
+        //     if (!String.IsNullOrEmpty(searchString))
+        //     {
+        //         movies = movies.Where(s => s.Title!.ToUpper().Contains(searchString.ToUpper()));
+        //     }
+
+        //     return View(await movies.ToListAsync());
+        // }
+        // GET: Movies
+        public async Task<IActionResult> Index(string movieGenre, string searchString, string movieYear)
         {
-            return View(await _context.Movie.ToListAsync());
+            if (_context.Movie == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            // Use LINQ to get list of genres.
+            IQueryable<string> genreQuery = from m in _context.Movie
+                                            orderby m.Genre
+                                            select m.Genre;
+
+            // Get the list of distinct years from ReleaseDate
+            IQueryable<string> yearQuery = from m in _context.Movie
+                                           orderby m.ReleaseDate.Year descending
+                                           select m.ReleaseDate.Year.ToString();
+            // Start the base movie query
+            var movies = from m in _context.Movie
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Title!.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genre == movieGenre);
+            }
+            // Filter movies from a specific year and newer
+            if (!string.IsNullOrEmpty(movieYear) && int.TryParse(movieYear, out int year))
+            {
+                movies = movies.Where(x => x.ReleaseDate.Year >= year);
+            }
+            var movieGenreVM = new MovieGenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Years = new SelectList(await yearQuery.Distinct().ToListAsync()), // NEW: Populate Years SelectList
+                Movies = await movies.ToListAsync(),
+                SearchString = searchString,
+                MovieGenre = movieGenre,
+                MovieYear = movieYear
+            };
+
+            return View(movieGenreVM);
         }
 
         // GET: Movies/Details/5
@@ -54,7 +113,7 @@ namespace MvcMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +145,7 @@ namespace MvcMovie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
         {
             if (id != movie.Id)
             {

@@ -364,3 +364,4 @@
 /Users/Dommmy/Documents/MvcMovie/bin/Debug/net10.0/runtimes/win-x86/native/e_sqlite3.dll
 /Users/Dommmy/Documents/MvcMovie/obj/Debug/net10.0/MvcMovie.csproj.AssemblyReference.cache
 /Users/Dommmy/Documents/MvcMovie/obj/Debug/net10.0/MvcMovie.csproj.Up2Date
+/Users/Dommmy/Documents/MvcMovie/obj/Debug/net10.0/MvcMovie.sourcelink.json

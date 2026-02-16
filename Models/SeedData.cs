@@ -25,6 +25,7 @@ public static class SeedData
                     Title = "When Harry Met Sally",
                     ReleaseDate = DateTime.Parse("1989-2-12"),
                     Genre = "Romantic Comedy",
+                    Rating = "R",
                     Price = 7.99M
                 },
                 new Movie
@@ -32,6 +33,7 @@ public static class SeedData
                     Title = "Ghostbusters ",
                     ReleaseDate = DateTime.Parse("1984-3-13"),
                     Genre = "Comedy",
+                    Rating = "PG",
                     Price = 8.99M
                 },
                 new Movie
@@ -39,6 +41,7 @@ public static class SeedData
                     Title = "Ghostbusters 2",
                     ReleaseDate = DateTime.Parse("1986-2-23"),
                     Genre = "Comedy",
+                    Rating = "PG",
                     Price = 9.99M
                 },
                 new Movie
@@ -46,7 +49,48 @@ public static class SeedData
                     Title = "Rio Bravo",
                     ReleaseDate = DateTime.Parse("1959-4-15"),
                     Genre = "Western",
+                    Rating = "NR",
                     Price = 3.99M
+                },
+                new Movie
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = DateTime.Parse("1994-9-22"),
+                    Genre = "Drama",
+                    Rating = "R",
+                    Price = 9.99M
+                },
+                new Movie
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = DateTime.Parse("1972-3-24"),
+                    Genre = "Crime",
+                    Rating = "R",
+                    Price = 9.99M
+                },
+                new Movie
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = DateTime.Parse("2008-7-18"),
+                    Genre = "Action",
+                    Rating = "PG-13",
+                    Price = 9.99M
+                },
+                new Movie
+                {
+                    Title = "Pulp Fiction",
+                    ReleaseDate = DateTime.Parse("1994-10-14"),
+                    Genre = "Crime",
+                    Rating = "R",
+                    Price = 9.99M
+                },
+                new Movie
+                {
+                    Title = "Schindler's List",
+                    ReleaseDate = DateTime.Parse("1993-12-15"),
+                    Genre = "History",
+                    Rating = "R",
+                    Price = 9.99M
                 }
             );
             context.SaveChanges();
