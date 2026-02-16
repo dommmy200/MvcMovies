@@ -1,6 +1,11 @@
 # NET / Visual Studio artifacts
+## .NET Core
+bin/
+obj/
 [Bb]in/
 [Oo]bj/
+**/bin/
+**/obj/
 global.json
 *.user
 *.userosscache
